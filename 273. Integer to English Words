@@ -1,0 +1,49 @@
+# 273. Integer to English Words
+
+# Example 1:
+
+# Input: num = 123
+# Output: "One Hundred Twenty Three"
+# Example 2:
+
+# Input: num = 12345
+# Output: "Twelve Thousand Three Hundred Forty Five"
+# Example 3:
+
+# Input: num = 1234567
+# Output: "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+# Example 4:
+
+# Input: num = 1234567891
+# Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
+ 
+
+# Constraints:
+
+# 0 <= num <= 231 - 1
+class Solution(object):
+    def numberToWords(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        to19 = 'One Two Three Four Five Six Seven Eight Nine Ten Eleven Twelve Thirteen Fourteen Fifteen Sixteen Seventeen Eighteen Nineteen'.split()
+        tens = 'Twenty Thirty Forty Fifty Sixty Seventy Eighty Ninety'.split()
+        def words(n):
+            if n < 20:
+                print('1:', to19[n-1:n])
+                return to19[n-1:n]
+            if n < 100:
+                print('2:', [tens[n//10-2]])
+                return [tens[n//10-2]] + words(n%10)
+            if n < 1000:
+                print('3:', [to19[n//100-1]])
+                print('4:', words(n%100))
+                return [to19[n//100-1]] + ['Hundred'] + words(n%100)
+            for p, w in enumerate(('Thousand', 'Million', 'Billion'), 1):
+                if n < 1000**(p+1):
+                    return words(n//1000**p) + [w] + words(n%1000**p)
+        return ' '.join(words(num)) or 'Zero'   
+                
+s = Solution()
+print(s.numberToWords(123))
