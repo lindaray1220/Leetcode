@@ -1,0 +1,140 @@
+# 426. Convert Binary Tree To Doubly Linked List I
+# The values in the nodes of the doubly linked list should follow the in-order traversal sequence of the binary tree.
+
+# Examples:
+
+#     10
+
+#    /  \
+
+#   5    15
+
+#  /
+
+# 2
+
+# Output:  2 <-> 5 <-> 10 <-> 15
+# A simple inorder traversal based program to convert a  
+# Binary Tree to DLL 
+  
+# A Binary Tree node 
+class Node:       
+  # Constructor to create a new tree node 
+  def __init__(self, val, left=None, right=None): 
+    self.val = val  
+    self.left = left
+    self.right = right
+
+class Solution:
+# Standard Inorder traversal of tree 
+  def treeDoublyList(self, root: 'Node') -> 'Node':
+    
+s = Solution()
+root = Node(10)
+root.left = Node(5)
+root.left.left = Node(2)
+root.right = Node(15)
+print(root.val)
+print(root.left.val)
+print(root.left.left.val)
+print(root.right.val)
+print('**************************')
+
+#2->5->10->15->2->5...
+dummy = s.treeDoublyList(root)
+print(dummy.val)
+print(dummy.right.val)
+print(dummy.right.right.val)
+print(dummy.right.right.right.val)
+print(dummy.right.right.right.right.val)
+print('**************************')
+print(dummy.val)
+print(dummy.left.val)
+print(dummy.left.left.val)
+print(dummy.left.left.left.val)
+print(dummy.left.left.left.left.val)
+print(dummy.left.left.left.left.left.val)
+
+
+
+
+# Solution
+# 426. Convert Binary Tree To Doubly Linked List I
+# The values in the nodes of the doubly linked list should follow the in-order traversal sequence of the binary tree.
+
+# Examples:
+
+#     10
+
+#    /  \
+
+#   5    15
+
+#  /
+
+# 2
+
+# Output:  2 <-> 5 <-> 10 <-> 15
+# A simple inorder traversal based program to convert a  
+# Binary Tree to DLL 
+  
+# A Binary Tree node 
+class Node:       
+  # Constructor to create a new tree node 
+  def __init__(self, val, left=None, right=None): 
+    self.val = val  
+    self.left = left
+    self.right = right
+
+class Solution:
+# Standard Inorder traversal of tree 
+  def treeDoublyList(self, root: 'Node') -> 'Node':
+    if not root:
+      return root
+    dummy = Node(None)
+    prev = None
+    stack = []
+    trav = root
+    while trav or stack:
+      while trav:
+        stack.append(trav)
+        trav = trav.left
+      trav = stack.pop()
+      if not dummy.right:
+        dummy.right = trav
+      if prev:
+        prev.right, trav.left = trav, prev
+      prev, trav = trav, trav.right
+    prev.right = dummy.right
+    dummy.right.left = prev
+    return dummy.right
+
+
+
+s = Solution()
+root = Node(10)
+root.left = Node(5)
+root.left.left = Node(2)
+root.right = Node(15)
+print(root.val)
+print(root.left.val)
+print(root.left.left.val)
+print(root.right.val)
+print('**************************')
+
+#2->5->10->15->2->5...
+dummy = s.treeDoublyList(root)
+print(dummy.val)
+print(dummy.right.val)
+print(dummy.right.right.val)
+print(dummy.right.right.right.val)
+print(dummy.right.right.right.right.val)
+print(dummy.right.right.right.right.right.val)
+print('**************************')
+#2->15->10->5->2->15...
+print(dummy.val)
+print(dummy.left.val)
+print(dummy.left.left.val)
+print(dummy.left.left.left.val)
+print(dummy.left.left.left.left.val)
+print(dummy.left.left.left.left.left.val)
