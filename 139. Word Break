@@ -1,0 +1,75 @@
+# 139. Word Break
+
+# Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+# Note:
+
+# The same word in the dictionary may be reused multiple times in the segmentation.
+# You may assume the dictionary does not contain duplicate words.
+# Example 1:
+
+# Input: s = "leetcode", wordDict = ["leet", "code"]
+# Output: true
+# Explanation: Return true because "leetcode" can be segmented as "leet code".
+# Example 2:
+
+# Input: s = "applepenapple", wordDict = ["apple", "pen"]
+# Output: true
+# Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
+#              Note that you are allowed to reuse a dictionary word.
+# Example 3:
+
+# Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
+# Output: false
+
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+# DP approach
+        # dp = [False]*(len(s)+1)
+        # dp[0] = True
+        # for i in range(len(s)):
+        #     if dp[i]:
+        #         for word in wordDict:
+        #             if s[i:i+len(word)] == word:
+        #                 dp[i+len(word)] = True
+        # return dp[-1]
+
+# BFS approach, Time Limit Exceeded
+        # import collections
+        # wordSet = set(wordDict)
+        # queue = collections.deque([0])
+        # while queue:
+        #   idx = queue.popleft()
+        #   if idx == len(s):
+        #     return True
+        #   for end in range(idx, len(s)):
+        #     if s[idx:end+1] in wordSet:
+        #       queue.append(end+1)
+        # return False
+
+
+s = Solution()
+# print(s.wordBreak("leetcode", ["leet", "code"]))
+
+# Time complexity
+# Time Complexity of word break program in dp approach is O(n * s).
+# Time complexity of word break program in recursive approach is O(2n*s).
+# Space complexity
+# The word break problem takes O(n) auxiliary space.
+
+strr = "leetcode"
+wordDict = ["leet", "code"]
+print(s.wordBreak(strr, wordDict))
+
+strr = "applepenapple"
+wordDict = ["apple", "pen"]
+print(s.wordBreak(strr, wordDict))
+
+strr = "catsandog"
+wordDict = ["cats", "dog", "sand", "and", "cat"]
+print(s.wordBreak(strr, wordDict))
