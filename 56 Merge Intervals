@@ -1,4 +1,4 @@
-# 56 Merge Intervals
+# 56. Merge Intervals
 
 # Given a set of time intervals in any order, return the total length of the area covered by those intervals.
 
