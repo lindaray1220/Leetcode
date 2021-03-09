@@ -1,0 +1,53 @@
+# 46. Permutations
+
+# Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+
+ 
+
+# Example 1:
+
+# Input: nums = [1,2,3]
+# Output: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+# Example 2:
+
+# Input: nums = [0,1]
+# Output: [[0,1],[1,0]]
+# Example 3:
+
+# Input: nums = [1]
+# Output: [[1]]
+ 
+
+# Constraints:
+
+# 1 <= nums.length <= 6
+# -10 <= nums[i] <= 10
+# All the integers of nums are unique.
+
+class Solution(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.res = []
+        def dfs(nums, tmp):
+            if len(tmp) == len(nums):
+                self.res.append(tmp[:])
+                return
+            for i in range(len(nums)):
+                if nums[i] in tmp:
+                    continue
+                tmp.append(nums[i])
+                dfs(nums, tmp)
+                tmp.pop()
+        dfs(nums, [])
+        return self.res
+
+# DFS + backtracking(使用list.contains去重复):
+
+# 我们也可以用DFS+Backtracking来做。这里需要建立一个helper函数permute和一个辅助List<Integer> onePerm。当onePerm.size() == nums.size()的时候，我们把这个辅助list加入到结果中。否则我们进行从0到nums.length - 1的遍历，在这个遍历过程中我们使用了DFS+回溯。我们假设给定nums中不含重复元素， 一个重要的去重步骤是，假如当前辅助List里已经有nums[i]了，那么我们进行跳过。这一步使用了O(n)的复杂度，所以导致整个过程比较慢。
+
+# Time Complexity - O(n!)， Space Complexity O(n)。  (其实由于有这一步list.contains()递归复杂度应该是  (n * 1) *((n - 1) * 2) *((n - 2) * 3)...)应该等于 ∏(12*..。 *n2)
+s = Solution()
+print(s.permute([1,2,3]))
