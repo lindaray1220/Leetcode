@@ -1,0 +1,53 @@
+# 238. Product of Array Except Self
+
+# Given an array nums of n integers where n > 1,  return an array output such that output[i] is equal to the product of all the elements of nums except nums[i].
+
+# Example:
+
+# Input:  [1,2,3,4]
+# Output: [24,12,8,6]
+# Constraint: It's guaranteed that the product of the elements of any prefix or suffix of the array (including the whole array) fits in a 32 bit integer.
+
+# Note: Please solve it without division and in O(n).
+
+# Follow up:
+# Could you solve it with constant space complexity? (The output array does not count as extra space for the purpose of space complexity analysis.)
+
+class Solution(object):
+  def productExceptSelf(self, nums):
+    """
+    input: int[] nums
+    return: int[]
+    """
+    # write your solution here
+    res = [0 for _ in range(len(nums))]
+    if not nums:
+      return [0]
+    res[0] = 1
+    for i in range(1, len(nums)):
+      res[i] = res[i-1] * nums[i-1]
+    r = 1
+    for j in range(len(nums)-1, -1, -1):
+      res[j] *= r
+      r *= nums[j]
+    return res
+
+s = Solution()
+print(s.productExceptSelf([1,2,3,4]))
+#Time: O(N), Space: O(1)
+    # res = [0 for _ in range(len(nums))]
+    # l = [1 for _ in range(len(nums))]
+    # r = [1 for _ in range(len(nums))]
+    # for i in range(1, len(nums)):
+    #   l[i] = l[i-1]*nums[i-1]
+    # for j in range(len(nums)-2, -1, -1):
+    #   r[j] = r[j+1]*nums[j+1]
+    # for k in range(len(nums)):
+    #   res[k] = l[k]*r[k]
+    # return res
+#Time: O(N), Space: O(2N)
+
+            # nums: 1,  2,  3, 4
+            # res:  1,  1,  2, 6
+            # r:    24, 12, 4, 1
+            # res:  24, 12, 8, 6
