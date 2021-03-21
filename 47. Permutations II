@@ -44,3 +44,31 @@ class Solution(object):
 
 s = Solution()
 print(s.permuteUnique([1,2,2,3]))
+
+class Solution(object):
+    def permuteUnique(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+
+        if not nums:
+            return []
+    
+        res = []
+        nums.sort()
+        self.helper(nums, res, 0)
+        return res
+    
+    def helper(self, nums, res, index):
+        if index == len(nums) - 1:
+            res.append(nums[:])
+            return
+        s = set()
+        for i in range(index, len(nums)):
+            if nums[i] in s:
+                continue
+            nums[index], nums[i] = nums[i], nums[index]
+            s.add(nums[index])
+            self.helper(nums, res, index + 1)
+            nums[index], nums[i] = nums[i], nums[index]
