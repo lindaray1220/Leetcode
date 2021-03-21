@@ -148,3 +148,22 @@ class Solution(object):
         # return combinations that add to target value            
         return cache[target]
 #Python Easiest approach using dp
+
+class Solution(object):
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        self.res = []
+        def dfs(candidates, target, idx, curr):
+            if target < 0:
+                return
+            if target == 0:
+                self.res.append(curr[:])
+                return
+            for i in range(idx, len(candidates)):
+                dfs(candidates, target-candidates[i], i, curr+[candidates[i]])
+        dfs(candidates, target, 0, [])
+        return self.res
