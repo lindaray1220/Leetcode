@@ -51,4 +51,30 @@ class Solution(object):
 #preorder
 #   3   9   20  15  7
 #       idx
-        
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def buildTree(self, preorder, inorder):
+        """
+        :type preorder: List[int]
+        :type inorder: List[int]
+        :rtype: TreeNode
+        """
+        if not inorder or not preorder:
+            return 
+        dic = {v:i for i, v in enumerate(inorder)}
+        def helper(s, e):
+            if s > e:
+                return
+            root = preorder.pop(0)
+            node = TreeNode(root)
+            idx = dic[root]
+            node.left = helper(s, idx-1)
+            node.right = helper(idx+1, e)
+            return node
+        return helper(0, len(preorder)-1)
