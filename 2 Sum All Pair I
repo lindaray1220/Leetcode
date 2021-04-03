@@ -1,0 +1,50 @@
+# 2 Sum All Pair I
+
+# Find all pairs of elements in a given array that sum to the given target number. Return all the pairs of indices.
+
+# Assumptions
+# The given array is not null and has length of at least 2.
+
+# Examples
+# A = {1, 3, 2, 4}, target = 5, return [[0, 3], [1, 2]]
+# A = {1, 2, 2, 4}, target = 6, return [[1, 3], [2, 3]]
+
+class Solution(object):
+  def allPairs(self, array, target):
+    """
+    input: int[] array, int target
+    return: int[][]
+    """
+    # write your solution here
+    if len(array) < 2:
+      return []
+    import collections
+    dic = collections.defaultdict(list)
+    res = []
+    for i in range(len(array)):
+      if target - array[i] in dic:
+        for j in dic[target - array[i]]:
+          res.append([i, j])
+      dic[array[i]].append(i)
+    return res
+#O(N**2) / O(N)
+
+# 1: 0
+# 2: 1, 2
+# 4: 3
+
+class Solution(object):
+  def allPairs(self, array, target):
+    """
+    input: int[] array, int target
+    return: int[][]
+    """
+    # write your solution here
+    res = []
+    if len(array) < 2:
+      return res
+    for i in range(len(array)):
+      for j in range(i+1, len(array)):
+        if array[i] + array[j] == target:
+          res.append([i, j])
+    return res
