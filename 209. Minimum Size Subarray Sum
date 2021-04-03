@@ -1,0 +1,109 @@
+# 209. Minimum Size Subarray Sum
+
+# Given an array of positive integers nums and a positive integer target, return the minimal length of a contiguous subarray [numsl, numsl+1, ..., numsr-1, numsr] of which the sum is greater than or equal to target. If there is no such subarray, return 0 instead.
+
+# Example 1:
+
+# Input: target = 7, nums = [2,3,1,2,4,3]
+# Output: 2
+# Explanation: The subarray [4,3] has the minimal length under the problem constraint.
+# Example 2:
+
+# Input: target = 4, nums = [1,4,4]
+# Output: 1
+# Example 3:
+
+# Input: target = 11, nums = [1,1,1,1,1,1,1,1]
+# Output: 0
+ 
+# Constraints:
+
+# 1 <= target <= 109
+# 1 <= nums.length <= 105
+# 1 <= nums[i] <= 105
+ 
+# Follow up: If you have figured out the O(n) solution, try coding another solution of which the time complexity is O(n log(n)).
+class Solution(object):
+    def minSubArrayLen(self, s, nums):
+        """
+        :type s: int
+        :type nums: List[int]
+        :rtype: int
+        """
+        self.size = len(nums) + 1
+        if not nums:
+            return 0
+        sum_ = 0
+        slw = 0
+        fst = 0
+        while fst < len(nums):
+            sum_ += nums[fst]
+            fst += 1
+            while sum_ >= s and slw < fst:
+                self.size = min(self.size, fst-slw)
+                sum_ -= nums[slw]
+                slw += 1
+        return 0 if self.size > len(nums) else self.size
+#   idx:    0   1   2   3       4       5   6                
+#   nums:   2   3   1   2       4       3
+#   fst:                                    f
+#   slw:                                s 
+#   MIN_LEN:            4       4/3     3/2
+#   SUM_:   2   5   6   8/6     10/7/6  9/7/3
+
+#O (N) / O (1)
+
+class Solution(object):
+    def minSubArrayLen(self, s, nums):
+        """
+        :type s: int
+        :type nums: List[int]
+        :rtype: int
+        """
+        if len(nums) < 0:
+            return 0
+        sum_ = [0 for i in range(len(nums)+1)]
+        min_len = len(nums)+1
+        for i in range(1, min_len):
+            sum_[i] = sum_[i-1] + nums[i-1]
+
+                        
+        
+        for i in range(len(nums)):
+            target = sum_[i]+s
+            l, r = i+1, len(nums)
+            while l <= r:
+                m = l + (r-l)/2
+                if sum_[m] < target:
+                    l = m+1
+                else:
+                    r = m-1
+            if l > len(nums):
+                break
+            if m - i < min_len:
+                min_len = m - i
+        return 0 if min_len > len(nums) else min_len
+            
+        if len(nums) < 0:
+            return 0
+        sum_ = [0 for i in range(len(nums)+1)]
+        cnt = len(nums)+1
+        for i in range(1, len(nums)+1):
+            sum_[i] = sum_[i-1] + nums[i-1]
+            
+
+            
+
+#idx:       0   1   2   3   4   5   6
+#nums:      2   3   1   2   4   3
+#sums:      0   2   5   6   8   12  15
+#           i               lmr
+#target:    7
+#min_len:   4
+#               i               lm  r
+#target:    9
+#min_len:   4
+#                           i       lmr
+#target:    13
+#min_len:   2        
+#O (NlogN) / O (1)
