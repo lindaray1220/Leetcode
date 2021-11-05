@@ -72,3 +72,5 @@ class Solution(object):
         return max(cross_max_sum, left, right)
 
 # O(NlogN)/O(1)
+
+# https://snowan.gitbook.io/study-notes/leetcode/english-solution/53.maximum-sum-subarray-en
