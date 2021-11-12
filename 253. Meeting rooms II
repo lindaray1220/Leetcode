@@ -16,7 +16,7 @@ class Solution(object):
     rooms = []
     import heapq
     for interval in intervals:
-      if len(rooms)>0 and rooms[0]<interval[0]:
+      if len(rooms)>0 and rooms[0]<=interval[0]:
         heapq.heappop(rooms)
         heapq.heappush(rooms, interval[1])
       else:
