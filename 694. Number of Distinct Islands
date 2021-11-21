@@ -73,3 +73,5 @@ grid = [
 ["1","1","0","1","1"]
 ]
 print(s.num_distinct_islands(grid))    
+
+# O(MN) / O(MN)
