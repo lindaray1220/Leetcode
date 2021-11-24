@@ -1,0 +1,56 @@
+# 678. Valid Parenthesis String
+
+# Given a string s containing only three types of characters: '(', ')' and '*', return true if s is valid.
+
+# The following rules define a valid string:
+
+# Any left parenthesis '(' must have a corresponding right parenthesis ')'.
+# Any right parenthesis ')' must have a corresponding left parenthesis '('.
+# Left parenthesis '(' must go before the corresponding right parenthesis ')'.
+# '*' could be treated as a single right parenthesis ')' or a single left parenthesis '(' or an empty string "".
+ 
+# Example 1:
+
+# Input: s = "()"
+# Output: true
+# Example 2:
+
+# Input: s = "(*)"
+# Output: true
+# Example 3:
+
+# Input: s = "(*))"
+# Output: true
+ 
+# Constraints:
+
+# 1 <= s.length <= 100
+# s[i] is '(', ')' or '*'.
+
+class Solution(object):
+    def checkValidString(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        if not s:
+            return True
+        cmin = 0
+        cmax = 0
+        for c in s:
+            if c == '(':
+                cmin += 1
+                cmax += 1
+            if c == ')':
+                cmin = max(cmin-1, 0)
+                cmax -= 1
+            if c == '*':
+                cmin = max(cmin-1, 0)
+                cmax += 1
+            if cmax < 0:
+                return False
+        return cmin == 0
+
+# O(N) / O(1)
+# https://www.youtube.com/watch?v=JNip3SgpZok
+        
