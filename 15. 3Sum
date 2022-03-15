@@ -21,6 +21,39 @@
 
 # 0 <= nums.length <= 3000
 # -105 <= nums[i] <= 105
+
+# Solution 1, two pointers
+
+class Solution(object):
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        if len(nums) < 3:
+            return []
+        nums.sort()
+        res = []
+        for i in range(len(nums)-2):
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
+            l, r = i+1, len(nums)-1
+            while l < r:
+                if nums[i] + nums[l] + nums[r] == 0:
+                    res.append((nums[i], nums[l], nums[r]))
+                    l += 1
+                    while l < r and nums[l] == nums[l-1]:
+                        l += 1
+                elif nums[i] + nums[l] + nums[r] < 0:
+                    l += 1
+                else:
+                    r -= 1
+        return res
+
+#O(N**2)/O(N)
+
+# Solution 2, two sum
+
 class Solution(object):
     def threeSum(self, nums):
         """
