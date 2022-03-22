@@ -1,0 +1,81 @@
+203. Remove Linked List Elements
+Easy
+
+4661
+
+158
+
+Add to List
+
+Share
+Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,6,3,4,5,6], val = 6
+Output: [1,2,3,4,5]
+Example 2:
+
+Input: head = [], val = 1
+Output: []
+Example 3:
+
+Input: head = [7,7,7,7], val = 7
+Output: []
+ 
+
+Constraints:
+
+The number of nodes in the list is in the range [0, 104].
+1 <= Node.val <= 50
+0 <= val <= 50
+
+Solution 1: Iteration
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def removeElements(self, head, val):
+        """
+        :type head: ListNode
+        :type val: int
+        :rtype: ListNode
+        """
+        if not head:
+            return head
+        dummy = prev = ListNode(None)
+        curr = head
+        prev.next = curr
+        while curr:
+            if curr.val == val:
+                prev.next = curr.next
+                curr = curr.next
+            else:
+                prev, curr = curr, curr.next
+        return dummy.next
+  
+ Solution 2: Recurrsion
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def removeElements(self, head, val):
+        """
+        :type head: ListNode
+        :type val: int
+        :rtype: ListNode
+        """
+        if not head:
+            return head
+        head.next = self.removeElements(head.next, val)
+        if head.val == val:
+            return head.next
+        else:
+            return head
