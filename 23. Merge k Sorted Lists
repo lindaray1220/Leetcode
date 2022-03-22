@@ -64,3 +64,39 @@ class Solution(object):
             prev = prev.next
         return dummy.next
             
+# O(N*k+Nlogn)/O(N)
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class MyListNode:
+    def __init__(self, l):
+        self.l = l
+    def __eq__(self, other):
+        return self.l.val == other.l.val
+    def __lt__(self, other):
+        return self.l.val < other.l.val
+            
+class Solution(object):
+    def mergeKLists(self, lists):
+        """
+        :type lists: List[ListNode]
+        :rtype: ListNode
+        """
+        dummy = ListNode(None)
+        curr = dummy
+        
+        heap = [MyListNode(i) for i in lists if i]
+        heapq.heapify(heap)
+        
+        while heap:
+            i = heapq.heappop(heap).l
+            curr.next = ListNode(i.val)
+            curr = curr.next
+            
+            if i.next:
+                heapq.heappush(heap, MyListNode(i.next))
+        return dummy.next
+     # O(N*logk)/O(N)
