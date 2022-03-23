@@ -1,0 +1,71 @@
+708. Insert into a Cyclic Sorted List
+Given a node from a cyclic linked list which is sorted in ascending order, write a function to insert a value into the list such that it remains a cyclic sorted list. The given node can be a reference to any single node in the list, and may not be necessarily the smallest value in the cyclic list.
+
+If there are multiple suitable places for insertion, you may choose any place to insert the new value. After the insertion, the cyclic list should remain sorted.
+
+If the list is empty (i.e., given node is null), you should create a new single cyclic list and return the reference to that single node. Otherwise, you should return the original given node.
+
+The following example may help you understand the problem better:
+
+ 
+
+
+
+In the figure above, there is a cyclic sorted list of three elements. You are given a reference to the node with value 3, and we need to insert 2 into the list.
+
+ 
+
+
+The new node should insert between node 1 and node 3. After the insertion, the list should look like this, and we should still return node 3.
+
+# Definition for singly-linked list.
+class ListNode(object):
+  def __init__(self, x):
+    self.val = x
+    self.next = None
+
+class Solution(object):
+  def insertCircularList(self, head, newVal):
+    """
+    input: ListNode head, int newVal
+    return: ListNode
+    """
+    # write your solution here
+    if not newVal:
+      return head
+    if not head:
+      head = ListNode(newVal)
+      head = head.next
+      return head
+    prev, succ = head, head.next
+    while True:
+      if prev.val <= newVal <= succ.val:
+        break
+      if prev.val > succ.val and (prev.val < newVal or newVal < succ.val):
+        break
+      prev, succ = succ, succ.next
+      if prev == head:
+        break
+    new_node = ListNode(newVal)
+    new_node.next = succ
+    prev.next = new_node
+    return head
+
+head = ListNode(2)
+head.next = ListNode(4)
+head.next.next = ListNode(1)
+head.next.next.next = head
+
+print(head.val)
+print(head.next.val)
+print(head.next.next.val)
+print(head.next.next.next.val)
+
+s = Solution()
+s.insertCircularList(head, 3)
+print('----s.insertCircularList(head, 2)----')
+print(head.val)
+print(head.next.val)
+print(head.next.next.val)
+print(head.next.next.next.val)
+print(head.next.next.next.next.val)
