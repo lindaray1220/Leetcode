@@ -1,0 +1,70 @@
+1305. All Elements in Two Binary Search Trees
+
+Given two binary search trees root1 and root2, return a list containing all the integers from both trees sorted in ascending order.
+
+ 
+
+Example 1:
+
+
+Input: root1 = [2,1,4], root2 = [1,0,3]
+Output: [0,1,1,2,3,4]
+Example 2:
+
+
+Input: root1 = [1,null,8], root2 = [8,1]
+Output: [1,1,8,8]
+ 
+
+Constraints:
+
+The number of nodes in each tree is in the range [0, 5000].
+-105 <= Node.val <= 105
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def getAllElements(self, root1, root2):
+        """
+        :type root1: TreeNode
+        :type root2: TreeNode
+        :rtype: List[int]
+        """
+        def traverse(root, l):
+            if not root:
+                return []
+            if root.left:
+                traverse(root.left, l)
+            l.append(root.val)
+            if root.right:
+                traverse(root.right, l)
+        
+        l1, l2 = [], []
+        traverse(root1, l1)
+        traverse(root2, l2)
+        
+        res = []
+        def MergeSort(l1, l2):
+            if not l1:
+                return l2
+            if not l2:
+                return l1
+            while l1 and l2:
+                if l1[0] <= l2[0]:
+                    res.append(l1[0])
+                    l1.popleft()
+                else:
+                    res.append(l2[0])
+                    l2.popleft()
+            if l1:
+                res.extend(l1)
+            if l2:
+                res.extend(l2)
+            return res
+        return MergeSort(collections.deque(l1), collections.deque(l2))
+                
+#O(N1+N2)/O(N1+N2)
