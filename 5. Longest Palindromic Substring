@@ -25,6 +25,7 @@
 # 1 <= s.length <= 1000
 # s consist of only digits and English letters (lower-case and/or upper-case),
 
+Solution 1: Expand around center
 class Solution(object):
     def longestPalindrome(self, s):
         """
@@ -50,3 +51,37 @@ class Solution(object):
         return r-l-1
 
 #O(N**2)/ O(1)
+
+Solution 2: DP
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        if len(s) <= 1:
+            return s
+        N = len(s)
+        dp = [[False]*N for _ in range(N)]
+        max_length = 1
+        max_pal_sub_str = s[0]
+        
+        for i in range(N):
+            dp[i][i] = True
+        
+        for i in range(N-1):
+            if s[i] == s[i+1]:
+                dp[i][i+1] = True
+                max_length = 2
+                max_pal_sub_str = s[i:i+2]
+        
+        for d in range(2, N):
+            for i in range(0, N - d):
+                j = i + d
+                if s[i] == s[j] and dp[i+1][j-1] == True:
+                    dp[i][j] = True
+                    max_length = j - i + 1
+                    max_pal_sub_str = s[i:j+1]
+        
+        return max_pal_sub_str
+#O(N**2)/ O(N**2)
