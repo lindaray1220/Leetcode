@@ -37,7 +37,7 @@ class Solution(object):
         :type amount: int
         :rtype: int
         """
-        if coins is None or amount is None:
+        if coins is None:
             return -1
         dp = [sys.maxsize-1] * (amount+1)
         dp[0] = 0
@@ -50,7 +50,7 @@ class Solution(object):
         if dp[-1] == sys.maxsize - 1:
             return -1
         return dp[-1]
-# O(amount * coins.length)/O(1)
+# O(amount * coins.length)/O(amount+1)
 
 
 DFS: time limit exceeded
