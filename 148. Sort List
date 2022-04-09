@@ -1,0 +1,120 @@
+148. Sort List
+
+Share
+Given the head of a linked list, return the list after sorting it in ascending order.
+
+Example 1:
+
+Input: head = [4,2,1,3]
+Output: [1,2,3,4]
+Example 2:
+
+Input: head = [-1,5,3,4,0]
+Output: [-1,0,3,4,5]
+Example 3:
+
+Input: head = []
+Output: []
+ 
+Constraints:
+
+The number of nodes in the list is in the range [0, 5 * 104].
+-105 <= Node.val <= 105
+ 
+
+Follow up: Can you sort the linked list in O(n logn) time and O(1) memory (i.e. constant space)?
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def sortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if head is None or head.next is None:
+            return head
+    
+        # length of list
+        length = 1
+        cur = head.next
+        while (cur):
+            length += 1
+            cur = cur.next
+    
+        dummy = ListNode(0)
+        dummy.next = head
+        n = 1
+        while (n < length):
+            cur = dummy.next 
+            tail = dummy
+            while (cur):
+                l = cur
+                r = self.split(l, n)
+                cur = self.split(r, n)
+                merged = self.merge(l, r)
+                tail.next = merged[0]
+                tail = merged[1]
+            n = n << 1
+    
+        return dummy.next
+
+        # Splits the list into two parts, first n element and the rest.
+        # Returns the head of the rest.
+    def split(self, head, n):
+        while (n>1 and head):
+            head = head.next
+            n -= 1
+        if head:
+            rest = head.next
+        else:
+            rest = None
+        if head:
+            head.next = None
+        return rest
+
+        # Merges two lists, returns the head and tail of the merged list.
+    def merge(self, l1, l2):
+        dummy = ListNode(0)
+        tail = dummy
+        while (l1 and l2):
+            if l1.val > l2.val:
+                l1, l2 = l2, l1
+            tail.next = l1
+            l1 = l1.next
+            tail = tail.next
+        if l1:
+            tail.next = l1
+        else:
+            tail.next = l2
+        while (tail.next):
+            tail = tail.next
+        return [dummy.next, tail]
+ #O(NlogN)/O(1)
+ 
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def sortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        dummy = prev = ListNode(None)
+        import heapq
+        heap = []
+        heapq.heapify(heap)
+        while head:
+            heapq.heappush(heap, head.val)
+            head = head.next
+        while heap:
+            prev.next = ListNode(heapq.heappop(heap))
+            prev = prev.next
+        return dummy.next
+ #O(NlogN+N)/O(N) 
