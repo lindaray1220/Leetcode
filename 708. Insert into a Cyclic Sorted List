@@ -18,12 +18,6 @@ In the figure above, there is a cyclic sorted list of three elements. You are gi
 
 The new node should insert between node 1 and node 3. After the insertion, the list should look like this, and we should still return node 3.
 
-# Definition for singly-linked list.
-class ListNode(object):
-  def __init__(self, x):
-    self.val = x
-    self.next = None
-
 class Solution(object):
   def insertCircularList(self, head, newVal):
     """
@@ -31,41 +25,51 @@ class Solution(object):
     return: ListNode
     """
     # write your solution here
-    if not newVal:
-      return head
-    if not head:
-      head = ListNode(newVal)
-      head = head.next
-      return head
-    prev, succ = head, head.next
+    curr = head
     while True:
-      if prev.val <= newVal <= succ.val:
+      if curr.val <= newVal and newVal <= curr.next.val:
         break
-      if prev.val > succ.val and (prev.val < newVal or newVal < succ.val):
+      elif curr.val > curr.next.val and (newVal > curr.val or newVal < curr.next.val):
         break
-      prev, succ = succ, succ.next
-      if prev == head:
+      curr = curr.next
+      if curr == curr.next:
         break
-    new_node = ListNode(newVal)
-    new_node.next = succ
-    prev.next = new_node
+    new = ListNode(newVal)
+    new.next = curr.next
+    curr.next = new      
     return head
+    
+#O(N)/O(1)
 
-head = ListNode(2)
-head.next = ListNode(4)
-head.next.next = ListNode(1)
-head.next.next.next = head
+head = ListNode(7)
+head.next = ListNode(0)
+head.next.next = ListNode(2)
+head.next.next.next = ListNode(6)
+head.next.next.next.next = head
 
-print(head.val)
-print(head.next.val)
-print(head.next.next.val)
-print(head.next.next.next.val)
-
-s = Solution()
-s.insertCircularList(head, 3)
-print('----s.insertCircularList(head, 2)----')
 print(head.val)
 print(head.next.val)
 print(head.next.next.val)
 print(head.next.next.next.val)
 print(head.next.next.next.next.val)
+
+s = Solution()
+s.insertCircularList(head, 3)
+s.insertCircularList(head, 3)
+s.insertCircularList(head, 4)
+s.insertCircularList(head, 1)
+s.insertCircularList(head, 5)
+s.insertCircularList(head, 8)
+print('----s.insertCircularList(head, 3, 3, 4, 1, 5)----')
+print(head.val)
+print(head.next.val)
+print(head.next.next.val)
+print(head.next.next.next.val)
+print(head.next.next.next.next.val)
+print(head.next.next.next.next.next.val)
+print(head.next.next.next.next.next.next.val)
+print(head.next.next.next.next.next.next.next.val)
+print(head.next.next.next.next.next.next.next.next.val)
+print(head.next.next.next.next.next.next.next.next.next.val)
+print(head.next.next.next.next.next.next.next.next.next.next.val)
+
