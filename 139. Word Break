@@ -38,6 +38,21 @@ class Solution(object):
         #             if s[i:i+len(word)] == word:
         #                 dp[i+len(word)] = True
         # return dp[-1]
+# O(N*len(wordDict)/O(N)
+
+# DP approach2, if dictionary is too long
+        if len(s) == 0 or len(wordDict) == 0:
+            return False
+        dp = [False]*(len(s)+1)
+        dp[0] = True
+        for i in range(1, len(s)+1):
+            for j in range(0, i):
+                if dp[j] and s[j:i] in wordDict:
+                    dp[i] = True
+                    break
+        return dp[-1]
+
+# O(N**2)/O(N)
 
 # BFS approach, Time Limit Exceeded
         # import collections
