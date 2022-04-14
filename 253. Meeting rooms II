@@ -11,17 +11,16 @@ class Solution(object):
     return: int
     """
     # write your solution here
-    if not intervals:
-      return 0
-    rooms = []
     import heapq
-    for interval in intervals:
-      if len(rooms)>0 and rooms[0]<=interval[0]:
-        heapq.heappop(rooms)
-        heapq.heappush(rooms, interval[1])
+    size = len(intervals)
+    if size<=1: return size
+    heap = []
+    for interval in sorted(intervals):
+      if heap and interval[0]>=heap[0]:
+        heapq.heappushpop(heap,interval[1])
       else:
-        heapq.heappush(rooms, interval[1])
-    return len(rooms)
+        heapq.heappush(heap,interval[1])
+    return len(heap)
 
 s = Solution()
 print(s.minMeetingRooms([[0, 30],[5, 10],[15, 20], [40,50]]))
